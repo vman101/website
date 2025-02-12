@@ -1,0 +1,4 @@
+# Website Creation sources
+
+# Compile the kernel
+    - https://itsfoss.com/compile-linux-kernel/

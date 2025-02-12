@@ -5,24 +5,34 @@ services:
       context: ./minishell
       dockerfile: Dockerfile
 
-    cap_drop:
-      - ALL
-      - NET_ADMIN
+    # cap_drop:
+    #   - ALL
     cap_add:
+      - NET_ADMIN
       - CHOWN
       - SETGID
       - DAC_OVERRIDE
       # - FSETID
       - SETUID
 
+    volumes:
+      - /home/vvobis/sgoinfre/git/personal/website/minishell/alpine/alpine-custom.iso:/boot.iso
+
     # Prevents gaining new privileges
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
     security_opt:
       - no-new-privileges
 
-    networks:
-      - website_net
+    environment:
+        DISK_SIZE: "1GB"
+        RAM_SIZE: "500MB"
+
+    # networks:
+    #   - website_net
     ports:
-      - "127.0.0.1:7681:7681"
+      - "8006:8006"
 
 networks:
   website_net:
