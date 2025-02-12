@@ -1,0 +1,30 @@
+services:
+  minishell:
+    container_name: "minishell"
+    build:
+      context: ./minishell
+      dockerfile: Dockerfile
+
+    cap_drop:
+      - ALL
+      - NET_ADMIN
+    cap_add:
+      - CHOWN
+      - SETGID
+      - DAC_OVERRIDE
+      # - FSETID
+      - SETUID
+
+    # Prevents gaining new privileges
+    security_opt:
+      - no-new-privileges
+
+    networks:
+      - website_net
+    ports:
+      - "127.0.0.1:7681:7681"
+
+networks:
+  website_net:
+    external: false
+    internal: true
