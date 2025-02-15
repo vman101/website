@@ -1,22 +1,21 @@
 services:
   minishell:
     container_name: "minishell"
+    # image: qemux/qemu-docker
+    restart: always
     build:
       context: ./minishell
       dockerfile: Dockerfile
 
-    # cap_drop:
-    #   - ALL
+    cap_drop:
+      - ALL
     cap_add:
       - NET_ADMIN
       - CHOWN
       - SETGID
       - DAC_OVERRIDE
-      # - FSETID
+      - FSETID
       - SETUID
-
-    volumes:
-      - /home/vvobis/sgoinfre/git/personal/website/minishell/alpine/alpine-custom.iso:/boot.iso
 
     # Prevents gaining new privileges
     devices:
@@ -25,9 +24,16 @@ services:
     security_opt:
       - no-new-privileges
 
-    environment:
-        DISK_SIZE: "1GB"
-        RAM_SIZE: "500MB"
+    # volumes:
+    #   - /home/victor/git/website/minishell/linux-minishell/alpine-custom.iso:/boot.iso
+
+    # environment:
+    #     DISK_SIZE: "1GB"
+    #     RAM_SIZE: "500MB"
+    #     ARGUMENTS: "-boot d"
+    #     DEBUG: "1"
+    #     BOOT_MODE: "legacy"
+        # BOOT: "https://dl-cdn.alpinelinux.org/alpine/v3.21/releases/x86_64/alpine-virt-3.21.3-x86_64.iso"
 
     # networks:
     #   - website_net
