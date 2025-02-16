@@ -10,7 +10,8 @@ docker compose down -v
 
 # remove volumes
 docker volume prune -f
-docker image rm website-minishell -f
+docker network rm website_website_net -f
+docker rmi website-nginx
 
 # start the containers
 docker compose up
