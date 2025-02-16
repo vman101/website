@@ -7,7 +7,7 @@ async fn main() -> std::io::Result<()> {
     use leptos_actix::{generate_route_list, LeptosRoutes};
     use vvsite::website::client::app::*;
 
-    let conf = get_configuration(None).await.unwrap();
+    let conf = get_configuration(Some("Cargo.toml")).await.unwrap();
     let addr = conf.leptos_options.site_addr;
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(App);
