@@ -23,6 +23,7 @@ services:
     networks:
       website_net:
         ipv4_address: "88.88.5.2"
+
     expose:
       - "8006"
 
@@ -53,6 +54,20 @@ services:
 
     ports:
       - "19001:80"
+
+  website:
+    container_name: "site"
+    restart: always
+    build:
+      context: ./vvsite
+      dockerfile: Dockerfile
+
+    networks:
+      website_net:
+        ipv4_address: "88.88.5.3"
+
+    expose:
+      - "3000"
 
 networks:
   website_net:
