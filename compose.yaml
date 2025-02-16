@@ -10,19 +10,21 @@ services:
     cap_drop:
       - ALL
     cap_add:
-      - NET_ADMIN
-      - CHOWN
       - SETGID
-      - DAC_OVERRIDE
       - FSETID
       - SETUID
 
     # Prevents gaining new privileges
     devices:
       - /dev/kvm
-      - /dev/net/tun
     security_opt:
       - no-new-privileges
+
+    networks:
+      website_net:
+        ipv4_address: "88.88.5.2"
+    expose:
+      - "8006"
 
     # volumes:
     #   - /home/victor/git/website/minishell/linux-minishell/alpine-custom.iso:/boot.iso
@@ -37,10 +39,26 @@ services:
 
     # networks:
     #   - website_net
+
+  nginx:
+    container_name: "nginx"
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    networks:
+      website_net:
+        ipv4_address: "88.88.5.1"
+
     ports:
-      - "8006:8006"
+      - "19001:80"
 
 networks:
   website_net:
-    external: false
-    internal: true
+    # external: false
+    # internal: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "88.88.0.0/21"
