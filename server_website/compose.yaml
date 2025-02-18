@@ -38,6 +38,17 @@ services:
     # networks:
     #   - website_net
 
+  certbot:
+    image: certbot/certbot
+    container_name: "certbot-site"
+    restart: always
+
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email victorvobis@protonmail.com -d victorvobis.mooo.com --agree-tos
+
   nginx-site:
     container_name: "nginx-site"
     restart: always
@@ -46,28 +57,19 @@ services:
       dockerfile: Dockerfile
 
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./certbot/conf:/etc/letsencrypt:ro
-      - ./certbot/www:/var/www/certbot:ro
+      - ./nginx/nginx.conf:/etc/nginc/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
 
+    depends_on:
+      - "minishell"
+      - "website"
     networks:
       website_net:
         ipv4_address: "88.88.5.1"
 
     ports:
-      - 80:80
-      - 443:443
-
-  certbot:
-    image: certbot/certbot
-    container_name: "certbot-site"
-
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt:rw
-      - ./certbot/www/:/var/www/certbot/:rw
-
-    
-    command: certonly --webroot --webroot-path /var/www/certbot --force-renewal --email victorvobis@protonmail.com -d remoteserver.vps.webdock.cloud --agree-tos
+      - 8080:80
 
   website:
     container_name: "site"

@@ -11,28 +11,31 @@ pub fn App() -> impl IntoView {
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/vvsite.css"/>
+        <Stylesheet href="/assets/website.css" />
 
         // sets the document title
         <Title text="Welcome to My Website"/>
 
         // content for this welcome page
         <Router>
-            <header class="flex flex-col h-64 w-screen bg-orange-700/60">
-            <h1 class="p-8 grow place-content-center text-center text-neutral-200/80 text-5xl">"My Personal Website"</h1>
-            <div class="w-screen flex p-1 justify-center px-30 bg-orange-700/80 gap-4">
-                <a class="text-white p-4 bg-orange-700 hover:bg-orange-500" href="/">"Home"</a>
-                <a class="text-white p-4 bg-orange-700 hover:bg-orange-500" href="/minishell">"Minishell"</a>
-                <a class="text-white p-4 bg-orange-700 hover:bg-orange-500" href="/minirt">"MiniRT"</a>
-                <a class="text-white p-4 bg-orange-700 hover:bg-orange-500" href="/emiku">"emiku"</a>
+            <header class="flex flex-col h-64 w-screen" style="background-color: rgb(169, 74, 74);">
+            <h1 class="p-8 grow place-content-center text-center text-5xl">"My Personal Website"</h1>
+            <div class="w-screen flex p-1 justify-center px-30 gap-4" style="background-color: #889E73DD">
+                <a class="text-lg p-4 hover:bg-[#889E73ff] rounded-md" href="/">"Home"</a>
+                <a class="text-lg p-4 hover:bg-[#889E73ff] rounded-md" href="/minishell">"Minishell"</a>
+                <a class="text-lg p-4 hover:bg-[#889E73ff] rounded-md" href="/minirt">"MiniRT"</a>
+                <a class="text-lg p-4 hover:bg-[#889E73ff] rounded-md" href="/emiku">"emiku"</a>
             </div>
             </header>
-            <main class="flex h-screen bg-orange-200/30 w-screen max-w-[1300px] m-auto p-4">
+            <main>
+            <div class="flex h-screen w-screen max-w-[1300px] m-auto p-4">
                 <Routes>
                     <Route path="" view=crate::website::client::home::HomePage/>
                     <Route path="/minishell" view=crate::website::client::minishell::MinishellPage/>
                     <Route path="/emiku" view=crate::website::client::emiku::EmikuPage/>
                     <Route path="/*any" view=NotFound/>
                 </Routes>
+            </div>
             </main>
         </Router>
     }
