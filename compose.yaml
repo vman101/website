@@ -1,7 +1,6 @@
 services:
   minishell:
     container_name: "minishell"
-    # image: qemux/qemu-docker
     restart: always
     build:
       context: ./minishell
@@ -23,20 +22,6 @@ services:
     networks:
       website_net:
         ipv4_address: "88.88.5.2"
-
-    # volumes:
-    #   - /home/victor/git/website/minishell/linux-minishell/alpine-custom.iso:/boot.iso
-
-    # environment:
-    #     DISK_SIZE: "1GB"
-    #     RAM_SIZE: "500MB"
-    #     ARGUMENTS: "-boot d"
-    #     DEBUG: "1"
-    #     BOOT_MODE: "legacy"
-        # BOOT: "https://dl-cdn.alpinelinux.org/alpine/v3.21/releases/x86_64/alpine-virt-3.21.3-x86_64.iso"
-
-    # networks:
-    #   - website_net
 
   nginx-site:
     container_name: "nginx-site"
@@ -66,7 +51,6 @@ services:
       - ./certbot/conf:/etc/letsencrypt:rw
       - ./certbot/www/:/var/www/certbot/:rw
 
-    
     command: certonly --webroot --webroot-path /var/www/certbot --force-renewal --email victorvobis@protonmail.com -d remoteserver.vps.webdock.cloud --agree-tos
 
   website:
