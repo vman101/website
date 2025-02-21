@@ -13,9 +13,10 @@ services:
       - FSETID
       - SETUID
 
-    # Prevents gaining new privileges
     devices:
       - /dev/kvm
+
+    # Prevents gaining new privileges
     security_opt:
       - no-new-privileges
 
@@ -25,11 +26,9 @@ services:
 
   nginx-site:
     container_name: "nginx-site"
-    restart: always
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
+    image: nginx
 
+    restart: always
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./certbot/conf:/etc/letsencrypt:ro
@@ -51,7 +50,7 @@ services:
       - ./certbot/conf:/etc/letsencrypt:rw
       - ./certbot/www/:/var/www/certbot/:rw
 
-    command: certonly --webroot --webroot-path /var/www/certbot --force-renewal --email victorvobis@protonmail.com -d remoteserver.vps.webdock.cloud --agree-tos
+    command: certonly --webroot --webroot-path /var/www/certbot --force-renewal --email victorvobis@protonmail.com -d 127.0.0.1 --agree-tos
 
   website:
     container_name: "site"

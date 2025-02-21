@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine
 ENV USERNAME="shelluser" \
     PASSWORD="" \
     SUDO_OK="false" \
@@ -6,7 +6,7 @@ ENV USERNAME="shelluser" \
     TZ="Etc/UTC"
 
 COPY ./entrypoint.sh /
-COPY --chmod=011 minishell_src/bin/minishell /bin/minishell
+COPY --chmod=011 ./minishell_src/bin/minishell /bin/minishell
 
 RUN apk update && \
     apk add --no-cache tini ttyd tzdata vim nano && \
